@@ -1,8 +1,8 @@
 /*
-	PROYECTO 1 FUNDAMENTOS DE INFRAESTRUCTURA TECNOL�GICA
+	PROYECTO 1 FUNDAMENTOS DE INFRAESTRUCTURA TECNOLÓGICA
 	Nombre Estudiante 1 - Codigo Estudiante 1
 	Nombre Estudiante 2 - Codigo Estudiante 2
-	Nombre Estudiante 3 - Codigo Estudiante 3
+	Juliana Prieto Arcila - 201714463
 */
 
 #include "stdlib.h"
@@ -14,6 +14,7 @@ void leer(unsigned char *V, unsigned char *s, int p, int l);
 int main(int argc, char* argv[])
 {
 	// Variables
+	
 	int op;
 	int l, p;
 	unsigned char *V;
