@@ -1,5 +1,5 @@
 /*
-	PROYECTO 1 FUNDAMENTOS DE INFRAESTRUCTURA TECNOLÓGICA
+	PROYECTO 1 FUNDAMENTOS DE INFRAESTRUCTURA TECNOL�GICA
 	Nombre Estudiante 1 - Codigo Estudiante 1
 	Nombre Estudiante 2 - Codigo Estudiante 2
 	Juliana Prieto Arcila - 201714463
@@ -14,7 +14,6 @@ void leer(unsigned char *V, unsigned char *s, int p, int l);
 int main(int argc, char* argv[])
 {
 	// Variables
-	
 	int op;
 	int l, p;
 	unsigned char *V;
