@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 	// Inicialización
 	V = (unsigned char *)calloc(100, sizeof(char));
 	
-		/*PRECAUCIÓN II: El vector puede que no esté inicializado en su totalidad
+	/*PRECAUCIÓN II: El vector puede que no esté inicializado en su totalidad
 	 * con 0's por lo que se procederá a rellenarlo hasta la posición 799 (para
 	 * evitar futuros inconvenientes)*/
 	int r;
@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
 			// Se leen l bits de V desde la posición p y se escriben como chars
 			// en s
 			leer(V, s, p, l);
-			printf("Se leyeron los siguientes bits: %s\n", s);
+			printf("Se leyeron los siguientes bytes: %s\n", s);
 		}
 		// Invalido
 		else if (op != 0) {
@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
 }
 
 /*
-	Procedimiento que escribe s empezando en el bit p de V
+Procedimiento que escribe s empezando en el bit p de V
 */
 void escribir(unsigned char *V, unsigned char *s, int p) {
 	// TODO: DESARROLLAR COMPLETAMENTE ESTE PROCEDIMIENTO
@@ -150,7 +150,7 @@ void escribir(unsigned char *V, unsigned char *s, int p) {
 		}
 
 		// Termina el void
-		printf("\nSe escribió s desde el bit p de V.\n");
+		printf("\nSe escribió s desde el byte p de V.\n");
 		return;
 	}
 
@@ -172,8 +172,8 @@ void escribir(unsigned char *V, unsigned char *s, int p) {
 }
 
 /*
-	Procedimiento que lee l bits de V desde la posición p y los escribe
-	como chars en s
+Procedimiento que lee l bytes de V desde la posición p y los escribe
+como chars en s
 */
 void leer(unsigned char *V, unsigned char *s, int p, int l) {
 	// TODO: DESARROLLAR COMPLETAMENTE ESTE PROCEDIMIENTO
