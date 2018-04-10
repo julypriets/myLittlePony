@@ -23,11 +23,11 @@ int main(int argc, char *argv[]) {
 	// Inicialización
 	V = (unsigned char *)calloc(100, sizeof(char));
 
-	/*PRECAUCIÓN II: El vector puede que no esté inicializado en su totalidad
+	/*PRECAUCIÓN: El vector puede que no esté inicializado en su totalidad
  * con 0's por lo que se procederá a rellenarlo hasta la posición 799 (para
  * evitar futuros inconvenientes)*/
 	int r;
-	for (r = 0; r < 799; r++) {
+	for (r = 0; r <= 799; r++) {
 		*(V + r) = '0';
 	}
 
@@ -198,8 +198,6 @@ void leer(unsigned char *V, unsigned char *s, int p, int l) {
 	/*
 	En dado caso que se pida leer una cadena que sumada a la posición supere la
 	capacidad del vector.
-	//FIXME - cuando ingreso de posición 799 y cadena 10, debería devolverme un
-	0 porque sí existe la posición 799, pero no lo hace U_U,
 	*/
 	if (p + l > 799) {
 		printf(
