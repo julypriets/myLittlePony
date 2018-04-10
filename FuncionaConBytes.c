@@ -198,8 +198,8 @@ void leer(unsigned char *V, unsigned char *s, int p, int l) {
 	/*
 	En dado caso que se pida leer una cadena que sumada a la posición supere la
 	capacidad del vector.
-	
-	//FIXME - cuando ingreso de posición 799 y cadena 10, debería devolverme un 0 porque sí existe la posición 799, pero no lo hace U_U, 
+	//FIXME - cuando ingreso de posición 799 y cadena 10, debería devolverme un
+	0 porque sí existe la posición 799, pero no lo hace U_U,
 	*/
 	if (p + l > 799) {
 		printf(
@@ -208,18 +208,16 @@ void leer(unsigned char *V, unsigned char *s, int p, int l) {
 			"su capacidad.\n");
 		// Mientras se esté dentro del rango y la capacidad del vector
 		while (i < 800 && i < p + l && j < l) {
-		
-				// Se asignará a la cadena el valor del vector en la posición
-				// correspondiente.
-				*(s + j) = V[i];
-				// Se continuará el aumento de posiciones para el arreglo y la
-				// cadena
-				j++;
-				i++;
-				// Hasta que alguno de los dos exceda su capacidad.
-			
+			// Se asignará a la cadena el valor del vector en la posición
+			// correspondiente.
+			*(s + j) = V[i];
+			// Se continuará el aumento de posiciones para el arreglo y la
+			// cadena
+			j++;
+			i++;
+			// Hasta que alguno de los dos exceda su capacidad.
 		}
-		printf("Se leyeron los siguientes bits: %s\n", s);
+		printf("Se leyeron los siguientes bytes: %s\n", s);
 		return;
 	}
 
@@ -239,5 +237,5 @@ void leer(unsigned char *V, unsigned char *s, int p, int l) {
 			// Hasta que alguno de los dos exceda su capacidad.
 		}
 	}
-	printf("Se leyeron los siguientes bits: %s\n", s);
+	printf("Se leyeron los siguientes bytes: %s\n", s);
 } // End
