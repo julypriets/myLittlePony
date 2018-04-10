@@ -22,15 +22,15 @@ int main(int argc, char *argv[]) {
 
 	// Inicialización
 	V = (unsigned char *)calloc(100, sizeof(char));
-	
+
 	/*PRECAUCIÓN II: El vector puede que no esté inicializado en su totalidad
-	 * con 0's por lo que se procederá a rellenarlo hasta la posición 799 (para
-	 * evitar futuros inconvenientes)*/
+ * con 0's por lo que se procederá a rellenarlo hasta la posición 799 (para
+ * evitar futuros inconvenientes)*/
 	int r;
 	for (r = 0; r < 799; r++) {
-		*(V+r)= '0';
+		*(V + r) = '0';
 	}
-	
+
 	s = (unsigned char *)calloc(17, sizeof(char));
 
 	// Mensaje inicial
@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
 			// Se leen l bits de V desde la posición p y se escriben como chars
 			// en s
 			leer(V, s, p, l);
-			printf("Se leyeron los siguientes bytes: %s\n", s);
+
 		}
 		// Invalido
 		else if (op != 0) {
@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
 }
 
 /*
-Procedimiento que escribe s empezando en el bit p de V
+	Procedimiento que escribe s empezando en el bit p de V
 */
 void escribir(unsigned char *V, unsigned char *s, int p) {
 	// TODO: DESARROLLAR COMPLETAMENTE ESTE PROCEDIMIENTO
@@ -104,8 +104,6 @@ void escribir(unsigned char *V, unsigned char *s, int p) {
 		printf("\nLa posición es inválida. Inténtelo de nuevo.\n");
 		return;
 	}
-
-
 
 	/*RESTRICCIÓN 1:
 	La cadena no puede ser mayor a 16 bytes.
@@ -150,7 +148,7 @@ void escribir(unsigned char *V, unsigned char *s, int p) {
 		}
 
 		// Termina el void
-		printf("\nSe escribió s desde el byte p de V.\n");
+		printf("\nSe escribió s desde el bit p de V.\n");
 		return;
 	}
 
@@ -172,22 +170,64 @@ void escribir(unsigned char *V, unsigned char *s, int p) {
 }
 
 /*
-Procedimiento que lee l bytes de V desde la posición p y los escribe
-como chars en s
+	Procedimiento que lee l bits de V desde la posición p y los escribe
+	como chars en s
 */
 void leer(unsigned char *V, unsigned char *s, int p, int l) {
 	// TODO: DESARROLLAR COMPLETAMENTE ESTE PROCEDIMIENTO
 
+	/* PRECAUCIÓN: posiciones incorrectas.
+		La posición excede la capacidad del arreglo. */
+	if (p > 799) {
+		printf(
+			"\nLa posición excede la capacidad del vector. Inténtelo de "
+			"nuevo.\n");
+		return;
+	}
+
+	/*La posición es inválida */
+	if (p < 0) {
+		printf("\nLa posición es inválida. Inténtelo de nuevo.\n");
+		return;
+	}
 	// Posición inicial del vector.
 	int i = p;
 	// Posición inicial de la cadena.
 	int j = 0;
 
+	/*
+	En dado caso que se pida leer una cadena que sumada a la posición supere la
+	capacidad del vector.
+	
+	//FIXME - cuando ingreso de posición 799 y cadena 10, debería devolverme un 0 porque sí existe la posición 799, pero no lo hace U_U, 
+	*/
+	if (p + l > 799) {
+		printf(
+			"\nADVERTENCIA: se leerá hasta lo que pueda contener "
+			"el vector puesto que la cadena y la posición dadas superan "
+			"su capacidad.\n");
+		// Mientras se esté dentro del rango y la capacidad del vector
+		while (i < 800 && i < p + l && j < l) {
+		
+				// Se asignará a la cadena el valor del vector en la posición
+				// correspondiente.
+				*(s + j) = V[i];
+				// Se continuará el aumento de posiciones para el arreglo y la
+				// cadena
+				j++;
+				i++;
+				// Hasta que alguno de los dos exceda su capacidad.
+			
+		}
+		printf("Se leyeron los siguientes bits: %s\n", s);
+		return;
+	}
+
 	// Mientras la pos no sea mayor a la pos inicial más la longitud de la
 	// cadena y...
 	while (i < p + l) {
 		//... mientras la posición en la cadena no exceda la longitud de la
-		//misma,
+		// misma,
 		while (j < l) {
 			// Se asignará a la cadena el valor del vector en la posición
 			// correspondiente.
@@ -199,4 +239,5 @@ void leer(unsigned char *V, unsigned char *s, int p, int l) {
 			// Hasta que alguno de los dos exceda su capacidad.
 		}
 	}
+	printf("Se leyeron los siguientes bits: %s\n", s);
 } // End
