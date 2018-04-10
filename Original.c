@@ -2,7 +2,7 @@
 	PROYECTO 1 FUNDAMENTOS DE INFRAESTRUCTURA TECNOL�GICA
 	Nombre Estudiante 1 - Codigo Estudiante 1
 	Nombre Estudiante 2 - Codigo Estudiante 2
-	Juliana Prieto Arcila - 201714463
+	Nombre Estudiante 3 - Codigo Estudiante 3
 */
 
 #include "stdlib.h"
