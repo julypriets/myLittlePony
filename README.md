@@ -25,4 +25,6 @@
     .__.'    /`  :|/_/|      |      |      | (       |            
     `-.___.-`;  / '   |      |      |      |  \      |            
            .:_-'      |       \     |       \  `.___/             
-\_______) \_______) 
+                      \_______)      \_______) 
+
+![https://media4.s-nbcnews.com/j/newscms/2018_04/1313194/skittles_flavors_180125_inline_39bdad2af4c490126f11c4a4ea1de688.today-inline-large.jpg](Skittles :v)
