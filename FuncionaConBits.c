@@ -150,6 +150,7 @@ void escribir(unsigned char *V, unsigned char *s, int p)
 	sch_one = strstr(s, "1");
 	if(sch_one == NULL && sch_zero == NULL){
 		printf("La cadena no contiene caracteres validos.\nRecuerde una cadena consta de unos y ceros.\nIntente de nuevo.");
+		return;
 	}
 
 	int bitte = p / 8;
