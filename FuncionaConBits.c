@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
 			printf("Escriba p: ");
 			scanf("%d", &p);
 
-			// Se escribe s desde el byte p de V
+			// Se escribe s desde el bit p de V
 			escribir(V, s, p);
 		}
 		// Leer
@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
 			printf("Escriba p: ");
 			scanf("%d", &p);
 
-			// Se leen l byte de V desde la posición p y se escriben como chars
+			// Se leen l bits de V desde la posición p y se escriben como chars
 			// en s
 			leer(V, s, p, l);
 
@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
 }
 
 /*
-	Procedimiento que escribe s empezando en el byte p de V
+	Procedimiento que escribe s empezando en el bit p de V
 */
 void escribir(unsigned char *V, unsigned char *s, int p) {
 
@@ -106,9 +106,9 @@ void escribir(unsigned char *V, unsigned char *s, int p) {
 	}
 
 	/*RESTRICCIÓN 1:
-	La cadena no puede ser mayor a 16 bytes.
-	Como char tiene solo 1 byte se asume que si la longitud es mayor a 16, es
-	mayor a 2 bytes. */
+	La cadena no puede ser mayor a 16 bits.
+	Como char tiene solo 1 bit se asume que si la longitud es mayor a 16, es
+	mayor a 2 bits. */
 
 	if (strlen(s) > 16) {
 		printf(
@@ -162,7 +162,7 @@ void escribir(unsigned char *V, unsigned char *s, int p) {
 		
 
 		// Termina el void
-		printf("\nSe escribió s desde el byte p de V.\n");
+		printf("\nSe escribió s desde el bit p de V.\n");
 		for(int i=0; i<strlen(s); i++){
 			s[i] =' ';
 		}
@@ -174,7 +174,7 @@ void escribir(unsigned char *V, unsigned char *s, int p) {
 
 
 /*
-	Procedimiento que lee l bytes de V desde la posición p y los escribe
+	Procedimiento que lee l bits de V desde la posición p y los escribe
 	como chars en s
 */
 void leer(unsigned char *V, unsigned char *s, int p, int l) {
@@ -219,7 +219,7 @@ void leer(unsigned char *V, unsigned char *s, int p, int l) {
 		// Ciclo :3 Christian NO QUERÍA DOCUMENTAR NO QUERÍA JULIANA NO QUERÍA!!!!!! Y ANTES SE REÍA!!!!!!! 
 		int k=0;
 		int j = 8-primerosBits;
-		//Mientras no terminemos de leer el Byte
+		//Mientras no terminemos de leer el bit
 		while (l-->0) {
 			//Concatena a *s el '1' o el '0' según corresponda
 			if(bitteModificado&comp){
@@ -238,7 +238,7 @@ void leer(unsigned char *V, unsigned char *s, int p, int l) {
 			}
 			k++;
 		}
-		printf("Se leyeron los siguientes bytes: %s\n", s);	
+		printf("Se leyeron los siguientes bits: %s\n", s);	
 		for(int i=0; i<strlen(s); i++){
 			s[i] =' ';
 		}
