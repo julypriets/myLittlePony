@@ -1,8 +1,8 @@
 ﻿/*
 	PROYECTO 2 FUNDAMENTOS DE INFRAESTRUCTURA TECNOLOGICA
-	Nombre Estudiante 1 - Codigo Estudiante 1
-	Nombre Estudiante 2 - Codigo Estudiante 2
-	Nombre Estudiante 3 - Codigo Estudiante 3
+	Nombre Valerie Parra Cortés - 201619703
+	Nombre Juliana Prieto Arcila - Codigo Estudiante 2
+	Nombre Christian David Florez Pinillos - 201423499
 */
 
 #include "stdlib.h"
@@ -95,14 +95,14 @@ void escribir(unsigned char *V, unsigned char *s, int p)
 	unsigned char a = *V;
 	unsigned char c = 8;
 	unsigned char b, bitte, posicion;
-	unsigned comp0;
-	unsigned comp1;
+	unsigned char comp0;
+	unsigned char comp1;
 	
 	int longi;
 	int l;
 	unsigned char prueba1,prueba2, prueba3;
 	int i=0;
-
+	
 	__asm {
 		//Tamaño
 		mov ebx, s
@@ -148,20 +148,17 @@ void escribir(unsigned char *V, unsigned char *s, int p)
 		ror dh, cl
 		ror dl, cl //En este punto, edi=l
 		
-		mov eax, 0
-		mov al, dh	
-		mov comp1, eax // Guarde comp1
+		mov comp1, dh // Guarde comp1
 		
-		mov eax, 0
-		mov al, dl	
-		mov comp0, eax // Guarde comp1
+			
+		mov comp0, dl // Guarde comp1
 			
 		
 		mov esi, s //esi =*s
-		mov edi, 0 // edi=i
+		mov edi, i // edi=i
 		mov al, '0' //al ='0'				
 		mov ebx, V //ebx =V		
-		mov edx, longi //edx=0
+		mov edx, 0 //edx=0
 		mov dl, posicion // dl v[posicion]		
 		//mov prueba1, dl	
 		
@@ -170,76 +167,87 @@ void escribir(unsigned char *V, unsigned char *s, int p)
 		
 		mov ah, [esi+edi] //ah = s[i] edi=i
 		mov ecx, [ebx+edx] //En cl se guardo el char que buscaba
-		mov al, '0' //al ='0'		
+		mov al, '0'
 
 		cmp ah, al // ah =0?		
-		je escribirUno	
+		je escribirCero
 
 		
-		mov edx, 0 //Escribir 0		
-		mov edx, comp0
+	
+		mov dl, comp0
 		or cl, dl	
 		mov ebx, V
+		mov edx, 0
 		mov dl, posicion
 		mov [ebx+edx], cl
+		mov prueba1, cl
 		jmp verificar //Salto a los avances y demás
 		
 		
-		escribirUno:	//Escribir 1
-		
-		mov edx, 0 //Escribir 0
-		mov edx, comp1
+		escribirCero:	//Escribir 1		
+		mov dl, comp1
 		and cl, dl	
 		mov ebx, V
+		mov edx, 0
 		mov dl, posicion
 		mov [ebx+edx], cl
-
+		mov prueba1, cl
+		
+		
 		verificar:
+		mov eax, 0
 		mov ah, bitte
 		inc ah 
 		mov bitte, ah //Aumento el bitte en el que voy
-		cmp ah, 8
-		je avancemos
-
-		jmp actualizarComparadores
-
-		avancemos:
-		mov bitte, 0
-		mov eax, 0
-		mov ah, posicion
-		inc eax
+		cmp ah, 8 
+		jne seguir
+		
+		mov eax, 0 //Esta parte solo se ejecuta si estoy en el bitte 8
+		mov al, posicion
+		inc al
 		mov posicion, al
-		
-		actualizarComparadores:
-		mov edx, 0 //Escribir 0
-		mov edx, comp0
+
+		seguir:
+		mov dl, comp0 //Mover comparadores
 		ror dl, 1
+		mov prueba1, dl
+		mov comp0, dl
 		
-		mov edx, 0 //Escribir 1
-		mov edx, comp1
-		mov prueba3, dl
+		mov dl, comp1 //Mover comparadores
 		ror dl, 1
+		mov prueba2, dl
+		mov comp1, dl
 		
-		mov eax, 0
+		mov eax, 0 //Incremento correcto de edi
 		mov eax, i
 		add eax, 1
 		mov i, eax
 		mov edi, eax
-	
 
+		mov esi, 0
+		mov edi, 0
+		mov eax, 0
+		mov ebx, 0
 		mov edx, 0
-		mov edx, longi
-		mov ebx, V  //Dejar como al inicio
-		
-		cmp edi, edx		
+		mov ecx, 0
+
+		mov esi, s		
+		mov edi, i
+		mov al, '0'
+		mov ebx, V
+		mov edx, 0
+		mov dl, posicion
+		mov ecx, longi
+
+		cmp edi, ecx 
 		jb inicioCiclo
-		
+			
 		salir:
 	
 
 		
 	}
-	printf("%d %d %d", prueba3,comp1, V[0]);
+	printf("%d %d",V[0],V[1]);
 	
 
 	
