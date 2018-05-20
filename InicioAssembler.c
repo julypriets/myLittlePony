@@ -1,17 +1,19 @@
 ﻿/*
-	PROYECTO 2 FUNDAMENTOS DE INFRAESTRUCTURA TECNOLOGICA
+	PROYECTO 1 FUNDAMENTOS DE INFRAESTRUCTURA TECNOL�GICA
 	Nombre Estudiante 1 - Codigo Estudiante 1
 	Nombre Estudiante 2 - Codigo Estudiante 2
-	Nombre Estudiante 3 - Codigo Estudiante 3
+	Juliana Prieto Arcila - 201714463
 */
 
-#include "stdlib.h"
 #include "stdio.h"
+#include "stdlib.h"
+// Se incluye esta librería para manipular strings.
+#include <string.h>
 
 void escribir(unsigned char *V, unsigned char *s, int p);
 void leer(unsigned char *V, unsigned char *s, int p, int l);
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
 	// Variables
 	int op;
@@ -20,34 +22,37 @@ int main(int argc, char* argv[])
 	unsigned char *s;
 
 	// Inicialización
-	V = (unsigned char*) calloc(100, sizeof(char));
-	s = (unsigned char*) calloc(17, sizeof(char));
-	
+	V = (unsigned char *)calloc(100, sizeof(char));
+
 	/*PRECAUCIÓN: El vector puede que no esté inicializado en su totalidad
- 	* con 0's por lo que se procederá a rellenarlo hasta la posición 799 para	
- 	* evitar futuros inconvenientes)*/
+ * con 0's por lo que se procederá a rellenarlo hasta la posición 799 (para
+ * evitar futuros inconvenientes)*/
 	int r;
 	for (r = 0; r < 100; r++)
 	{
-		V[r] = 1;
+		V[r] = 0;
 	}
 
+	s = (unsigned char *)calloc(17, sizeof(char));
+
 	// Mensaje inicial
-	printf("PROYECTO 2 - INFRATEC");
+	printf("PROYECTO 1 - INFRATEC");
 
 	// Loop hasta terminar
 	op = 3;
 	while (op != 0)
 	{
 		// Se pregunta al usuario cual opcion desea realizar
-		printf("\n\n* Indique la modalidad\n\t0: Terminar\n\t1: Escribir\n\t2: Leer\n\n");
+		printf(
+			"\n\n* Indique la modalidad\n\t0: Terminar\n\t1: Escribir\n\t2: "
+			"Leer\n\n");
 		printf("Modalidad: ");
 		scanf("%d", &op);
 
 		// Escribir
 		if (op == 1)
 		{
-			printf("Acción %d: Escribir\n\n",op);
+			printf("Acción %d: Escribir\n\n", op);
 
 			// Se reciben los valores de s y p
 			printf("Escriba s: ");
@@ -57,12 +62,11 @@ int main(int argc, char* argv[])
 
 			// Se escribe s desde el bit p de V
 			escribir(V, s, p);
-			printf("\nSe escribió s desde el bit p de V.\n");
 		}
 		// Leer
 		else if (op == 2)
 		{
-			printf("Acción %d: Leer\n\n",op);
+			printf("Acción %d: Leer\n\n", op);
 
 			// Se reciben los valores de l y p
 			printf("Escriba l: ");
@@ -70,9 +74,9 @@ int main(int argc, char* argv[])
 			printf("Escriba p: ");
 			scanf("%d", &p);
 
-			// Se leen l bits de V desde la posición p y se escriben como chars en s
+			// Se leen l bits de V desde la posición p y se escriben como chars
+			// en s
 			leer(V, s, p, l);
-			printf("Se leyeron los siguientes bits: %s\n", s);
 		}
 		// Invalido
 		else if (op != 0)
@@ -87,94 +91,183 @@ int main(int argc, char* argv[])
 }
 
 /*
-	Procedimiento que escribe s empezando en el bit p de V.
+	Procedimiento que escribe s empezando en el bit p de V
 */
 void escribir(unsigned char *V, unsigned char *s, int p)
 {
-	unsigned char a = *s;
-	unsigned char c = 8;
-	unsigned char b, bitte, posicion;
-	unsigned comp0=128;
-	unsigned comp1=127;
-	int l;
-	unsigned char prueba=1;
 
-	__asm {
-		//Tamaño
-		mov ebx, s
-		mov edi, 0
-		inicio:
-		mov ah, [ebx+edi]
-		cmp ah, 0
-		je fin
-		add edi, 1
-		jmp inicio
-		fin:
-
-		cmp edi, 16 //Restricción 1
-		ja salir		
-
-		//Truncar
-		mov eax, 0
-		mov eax, p
-		add eax, edi //Edi no se ha tocado
-		cmp eax, 800
-		jb cabe
-		mov eax, p
-		mov esi, 800
-		sub esi, eax //800-p
-		mov edi, esi // Dejar en edi la nueva longitud
-		
-		//Escribir como tal
-		cabe:
-		mov l, edi //La longitud la guardo en l
-		mov eax, 0
-		mov eax, p
-		cmp eax, 800 //Restricción 2
-		ja salir
-		div c
-		mov bitte, ah //Residuo
-		mov posicion, al //Cociente
-		
-		mov dh, 127// dh= comp1 =01111111
-		mov dl, 128 // dh =comp0 =1000000
-		mov cl, posicion // edx =posicion
-		
-		//Rotaciones
-		ror dh, cl
-		ror dl, cl //En este punto, edi=l
-
-	
-		mov esi, s
-		mov edi, 0
-		mov al, '0'
-		
-		inicioCiclo:
-		mov ah, [esi+edi] //ah = s[i]
-		cmp ah, al // ah =0?
-		
-		mov ecx, 0
-		mov ecx, V[edi]
-		mov prueba, ch
-		
-		
-		salir:
-	
-
-		
+	/* PRECAUCIÓN: posiciones incorrectas.
+	La posición excede la capacidad del arreglo. */
+	if (p > 799)
+	{
+		printf(
+			"\nLa posición excede la capacidad del vector. Inténtelo de "
+			"nuevo.\n");
+		return;
 	}
-	printf("%d", prueba);
-	
+	/*La posición es inválida */
+	if (p < 0)
+	{
+		printf("\nLa posición es inválida. Inténtelo de nuevo.\n");
+		return;
+	}
+
+	/*RESTRICCIÓN 1:
+	La cadena no puede ser mayor a 16 bits.
+	Como char tiene solo 1 bit se asume que si la longitud es mayor a 16, es
+	mayor a 2 bits. */
+
+	if (strlen(s) > 16)
+	{
+		printf(
+			"\nLa cadena excede la longitud permitida. Vuelva a "
+			"intentarlo.\n");
+		return;
+	}
+
+	/* RESTRICCIÓN 2:
+	Si la cadena excede la capacidad del vector, toca escribir lo que
+	alcance.
+	Si la longitud de la cadena sumada a la posición es mayor a la
+	capacidad del vector,
+	entonces cumple la condición. */
+	// Se declara l
+	int l = strlen(s);
+	if (p + l > 800)
+	{
+		printf(
+			"\nADVERTENCIA: se leerá hasta lo que pueda contener "
+			"el vector puesto que la cadena y la posición dadas superan "
+			"su capacidad.\n");
+		l = l - (p + l - 800);
+	}
+
+	/* RESTRICCIÓN 3:
+	Si la cadena ingresada por el usuario no contiene caracteres válidos */
+	char * sch_zero;
+	char * sch_one;
+	sch_zero = strstr(s, "0");
+	sch_one = strstr(s, "1");
+	if(sch_one == NULL && sch_zero == NULL){
+		printf("La cadena no contiene caracteres validos.\nRecuerde una cadena consta de unos y ceros.\nIntente de nuevo.");
+		return;
+	}
+
+	int bitte = p / 8;
+	int posicion = p % 8;
+	//unsigned char bitteModificado= V[bitte];
+	unsigned char comp0 = 128; //10000000
+	unsigned char comp1 = 127; //01111111
+	comp1 = (comp1 >> posicion) | (comp1 << 8 - posicion);
+	comp0 = (comp0 >> posicion) | (comp0 << 8 - posicion);
+	unsigned char c;
+	for (int i = 0; i < l; i++)
+	{
+		c = s[i];
+		if (c == '0')
+		{
+			V[bitte] = V[bitte] & comp1;
+		}
+		else
+		{
+			V[bitte] = V[bitte] | comp0;
+		}
+		posicion++;
+		if (posicion == 8)
+		{
+			posicion = 0;
+			bitte++;
+		}
+		comp0 = (comp0 >> 1) | (comp0 << 7);
+		comp1 = (comp1 >> 1) | (comp1 << 7);
+	}
+
+	// Termina el void
+	printf("\nSe escribió s desde el bit p de V.\n");
+	for (int i = 0; i < strlen(s); i++)
+	{
+		s[i] = ' ';
+	}
+	return;
 }
 
 /*
-	Procedimiento que lee l bits de V desde la posición p y los escribe como chars en s.
+	Procedimiento que lee l bits de V desde la posición p y los escribe
+	como chars en s
 */
 void leer(unsigned char *V, unsigned char *s, int p, int l)
 {
-	//TODO: DESARROLLAR COMPLETAMENTE ESTE PROCEDIMIENTO
-	// ESCRIBIR EN ENSAMBLADOR, *NO* SE PUEDEN USAR NOMBRES SIMBOLICOS
-	__asm {
-        
+
+	/* PRECAUCIÓN: posiciones incorrectas.
+		La posición excede la capacidad del arreglo. */
+
+	if (p > 799)
+	{
+		printf(
+			"\nLa posición excede la capacidad del vector. Inténtelo de "
+			"nuevo.\n");
+		return;
+	}
+
+	/*La posición es inválida */
+	if (p < 0)
+	{
+		printf("\nLa posición es inválida. Inténtelo de nuevo.\n");
+		return;
+	}
+
+	/*
+	En dado caso que se pida leer una cadena que sumada a la posición supere la
+	capacidad del vector.
+	*/
+
+	// Posición inicial del vector. Es igual a p
+	// Posición inicial de la cadena.
+
+	if (p + l > 800)
+	{
+		printf(
+			"\nADVERTENCIA: se leerá hasta lo que pueda contener "
+			"el vector puesto que la cadena y la posición dadas superan "
+			"su capacidad.\n");
+		l = l - (p + l - 800);
+	}
+	printf("L es: %d\n", l);
+	int bitte = p / 8;
+	int primerosBits = p % 8;
+	unsigned char bitteModificado = V[bitte];
+	bitteModificado = (bitteModificado << primerosBits);
+	unsigned char comp = 128;
+	
+	int k = 0;
+	int j = 8 - primerosBits;
+	//Mientras no terminemos de leer el bit
+	while (l-- > 0)
+	{
+		//Concatena a *s el '1' o el '0' según corresponda
+		if (bitteModificado & comp)
+		{
+			*(s + k) = '1';
+		}
+		else
+		{
+			*(s + k) = '0';
+		}
+		j++;
+		if (j == 8)
+		{
+			bitteModificado = V[++bitte];
+			j = 0;
+		}
+		else
+		{
+			bitteModificado = (bitteModificado << 1);
+		}
+		k++;
+	}
+	printf("Se leyeron los siguientes bits: %s\n", s);
+	for (int i = 0; i < strlen(s); i++)
+	{
+		s[i] = ' ';
 	}
 }
