@@ -88,11 +88,12 @@ void escribir(unsigned char *V, unsigned char *s, int p)
 	unsigned comp0=128;
 	unsigned comp1=127;
 	int l;
+	int prueba;
 
 	__asm {
 		//Tamaño
 		mov ebx, s
-		mov edi, 1
+		mov edi, 0
 		inicio:
 		mov ah, [ebx+edi]
 		cmp ah, 0
@@ -100,7 +101,7 @@ void escribir(unsigned char *V, unsigned char *s, int p)
 		add edi, 1
 		jmp inicio
 		fin:
-		//mov b, edi
+		mov prueba, edi
 
 		//Salir
 		cmp edi, 16
@@ -137,18 +138,28 @@ void escribir(unsigned char *V, unsigned char *s, int p)
 		ror dh, cl
 		ror dl, cl //En este punto, edi=l
 		
+		
+		mov ebx, s //Preparación para el for
+		mov esi, 0 //Esi,edi,dh,dl ocupado
+		mov bh, '0'//bh ocupado
 		for:
-		
-		
-				
+		mov bl, [ebx+esi] // bl ocupado
 
+		cmp bl, bh // s[i]= '0' ?
+		mov cl, V[bitte] //cl ocupado
+		
+		je escribirCero
+		and cl, dl	//Escribir 1	
+		
+		escribirCero:
+			
 		//Fin de escribir
 		salir:
 
 
 		
 	}
-	printf("%d", bitte);
+	printf("%d", b);
 	
 }
 
