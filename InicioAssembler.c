@@ -22,6 +22,15 @@ int main(int argc, char* argv[])
 	// Inicialización
 	V = (unsigned char*) calloc(100, sizeof(char));
 	s = (unsigned char*) calloc(17, sizeof(char));
+	
+	/*PRECAUCIÓN: El vector puede que no esté inicializado en su totalidad
+ 	* con 0's por lo que se procederá a rellenarlo hasta la posición 799 para	
+ 	* evitar futuros inconvenientes)*/
+	int r;
+	for (r = 0; r < 100; r++)
+	{
+		V[r] = 1;
+	}
 
 	// Mensaje inicial
 	printf("PROYECTO 2 - INFRATEC");
@@ -88,7 +97,7 @@ void escribir(unsigned char *V, unsigned char *s, int p)
 	unsigned comp0=128;
 	unsigned comp1=127;
 	int l;
-	int prueba;
+	unsigned char prueba=1;
 
 	__asm {
 		//Tamaño
@@ -101,11 +110,9 @@ void escribir(unsigned char *V, unsigned char *s, int p)
 		add edi, 1
 		jmp inicio
 		fin:
-		mov prueba, edi
 
-		//Salir
-		cmp edi, 16
-		ja salir
+		cmp edi, 16 //Restricción 1
+		ja salir		
 
 		//Truncar
 		mov eax, 0
@@ -113,53 +120,50 @@ void escribir(unsigned char *V, unsigned char *s, int p)
 		add eax, edi //Edi no se ha tocado
 		cmp eax, 800
 		jb cabe
-		sub eax, edi // eax=p
-		//mov bitte, eax
+		mov eax, p
 		mov esi, 800
 		sub esi, eax //800-p
 		mov edi, esi // Dejar en edi la nueva longitud
 		
 		//Escribir como tal
 		cabe:
-		mov l, edi
+		mov l, edi //La longitud la guardo en l
 		mov eax, 0
 		mov eax, p
-		cmp eax, 800 //Si es mayot a 800, salgo
+		cmp eax, 800 //Restricción 2
 		ja salir
 		div c
 		mov bitte, ah //Residuo
 		mov posicion, al //Cociente
 		
-		mov dh, 127// dh= cmp1 //01111111
-		mov dl, 128 // dh =cmp0 //1000000
+		mov dh, 127// dh= comp1 =01111111
+		mov dl, 128 // dh =comp0 =1000000
 		mov cl, posicion // edx =posicion
 		
 		//Rotaciones
 		ror dh, cl
 		ror dl, cl //En este punto, edi=l
-		
-		
-		mov ebx, s //Preparación para el for
-		mov esi, 0 //Esi,edi,dh,dl ocupado
-		mov bh, '0'//bh ocupado
-		for:
-		mov bl, [ebx+esi] // bl ocupado
 
-		cmp bl, bh // s[i]= '0' ?
-		mov cl, V[bitte] //cl ocupado
+	
+		mov esi, s
+		mov edi, 0
+		mov al, '0'
 		
-		je escribirCero
-		and cl, dl	//Escribir 1	
+		inicioCiclo:
+		mov ah, [esi+edi] //ah = s[i]
+		cmp ah, al // ah =0?
 		
-		escribirCero:
-			
-		//Fin de escribir
+		mov ecx, 0
+		mov ecx, V[edi]
+		mov prueba, ch
+		
+		
 		salir:
-
+	
 
 		
 	}
-	printf("%d", b);
+	printf("%d", prueba);
 	
 }
 
