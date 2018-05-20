@@ -84,8 +84,10 @@ void escribir(unsigned char *V, unsigned char *s, int p)
 {
 	unsigned char a = *s;
 	unsigned char c = 8;
-	unsigned char b;
-	unsigned char bitte;
+	unsigned char b, bitte, posicion;
+	unsigned comp0=128;
+	unsigned comp1=127;
+	int l;
 
 	__asm {
 		//Tamaño
@@ -115,19 +117,35 @@ void escribir(unsigned char *V, unsigned char *s, int p)
 		mov esi, 800
 		sub esi, eax //800-p
 		mov edi, esi // Dejar en edi la nueva longitud
-	
+		
 		//Escribir como tal
 		cabe:
+		mov l, edi
 		mov eax, 0
 		mov eax, p
 		cmp eax, 800 //Si es mayot a 800, salgo
 		ja salir
 		div c
 		mov bitte, ah //Residuo
-		jmp salirSalir	
+		mov posicion, al //Cociente
+		
+		mov dh, 127// dh= cmp1 //01111111
+		mov dl, 128 // dh =cmp0 //1000000
+		mov cl, posicion // edx =posicion
+		
+		//Rotaciones
+		ror dh, cl
+		ror dl, cl //En este punto, edi=l
+		
+		for:
+		
+		
+				
+
+		//Fin de escribir
 		salir:
-		mov bitte, 9
-		salirSalir:
+
+
 		
 	}
 	printf("%d", bitte);
