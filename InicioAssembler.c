@@ -1,8 +1,8 @@
 ﻿/*
 	PROYECTO 2 FUNDAMENTOS DE INFRAESTRUCTURA TECNOLOGICA
-	Nombre Valerie Parra Cortés - 201619703
-	Nombre Juliana Prieto Arcila - Codigo Estudiante 2
-	Nombre Christian David Florez Pinillos - 201423499
+	Nombre Estudiante 1 - Codigo Estudiante 1
+	Nombre Estudiante 2 - Codigo Estudiante 2
+	Nombre Estudiante 3 - Codigo Estudiante 3
 */
 
 #include "stdlib.h"
@@ -105,6 +105,11 @@ void escribir(unsigned char *V, unsigned char *s, int p)
 	
 	__asm {
 		//Tamaño
+		mov eax, p
+		cmp eax, 0
+		jl salir
+		
+		mov eax, 0
 		mov ebx, s
 		mov edi, 0
 		inicio:
@@ -116,7 +121,7 @@ void escribir(unsigned char *V, unsigned char *s, int p)
 		fin:
 
 		cmp edi, 16 //Restricción 1
-		ja salir		
+		jg salir		
 
 		//Truncar
 		mov eax, 0
@@ -135,7 +140,7 @@ void escribir(unsigned char *V, unsigned char *s, int p)
 		mov eax, 0
 		mov eax, p
 		cmp eax, 800 //Restricción 2
-		ja salir
+		jg salir
 		div c
 		mov bitte, ah 
 		mov posicion, al 
@@ -242,12 +247,9 @@ void escribir(unsigned char *V, unsigned char *s, int p)
 		cmp edi, ecx 
 		jb inicioCiclo
 			
-		salir:
-	
-
-		
+		salir:		
 	}
-	printf("%d %d",V[0],V[1]);
+	//printf("%d %d",V[0],V[99]);
 	
 
 	
@@ -257,10 +259,110 @@ void escribir(unsigned char *V, unsigned char *s, int p)
 	Procedimiento que lee l bits de V desde la posición p y los escribe como chars en s.
 */
 void leer(unsigned char *V, unsigned char *s, int p, int l)
-{
-	//TODO: DESARROLLAR COMPLETAMENTE ESTE PROCEDIMIENTO
-	// ESCRIBIR EN ENSAMBLADOR, *NO* SE PUEDEN USAR NOMBRES SIMBOLICOS
+{	
+	int prueba =0, prueba3;
+	unsigned char prueba1,prueba2;
 	__asm {
+		//Truncar
+		//mov s, ' '
+		mov eax, 0	
+		mov eax, p
+		
+		cmp eax, 799
+		jg salir
+		cmp eax, 0
+		jl salir
+		
+		mov ebx, 0
+		mov ebx, l
+		add ebx, eax
+		cmp ebx, 800
+		
+		jb seguir
+		mov ebx, 0
+		mov ebx, 800
+		sub ebx, eax //800-p
+		
+		seguir:
+		mov eax, p
+		mov dl, 8
+		div dl //ah=primerosBitts, al= bitte
+				
+		mov ecx, 0		
+		mov cl, ah
+		push ecx // Residuo=primerosBits
+		mov ecx, 0		
+		mov cl, al
+		mov p, ecx //Me aprovecho de p
+		mov prueba, ecx
+		push ecx //Cociente=bitte=Ecx
+		
+				
+		mov edi, 0
+		mov edi, V
+		mov eax, 0
+		pop eax //cociente=posicion arreglo= bitte
+
+		mov ecx, [edi+eax] //V[bitte], ecx=bitteModificado
+
+		
+		mov esi, ecx //ESI=bitteModificado
+		mov ecx, 0 		
+		pop ecx //ecx=primerosBits
+		shl esi, cl //ESI= BITTE MODIFICADO
+		mov prueba, esi	
+		 
+		push eax // Meto el cociente=bitte=posicion arreglo
+		
+		mov edx,0 //Contador de escribir		
+		mov prueba, ecx		
+		
+		inicioCiclo:		
+		mov eax, 0
+		mov al, 128 //EAX = COMP
+		mov edi, esi // Muevo a edi el bitteModificado para guardarlo
+		and edi, eax
+		cmp edi, 0
+ 		
+		je escribirCero
+		mov eax, 0
+		mov eax, s
+		mov [eax+edx], '1'
+		jmp verificar
+
+		escribirCero:
+		mov eax, 0
+		mov eax, s
+		mov [eax+edx], '0'
+		
+		verificar:
+		inc ecx
+		cmp ecx, 8	
+		jb avanzarBit
+		
+		mov eax, 0
+		mov eax, p
+		inc eax
+		mov esi, V[eax]
+		mov prueba3, esi
+		jmp avance
+
+		avanzarBit:		
+		inc edx  //k++
+		shl esi, 1 
+		
+		avance:
+		mov eax, l
+		dec eax
+		mov l, eax
+		cmp eax, 0
+		ja inicioCiclo
+		
+		
+
+		salir:		
         
-	}
+	}	
+
+	
 }
