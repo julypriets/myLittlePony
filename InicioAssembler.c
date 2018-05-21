@@ -1,8 +1,8 @@
 ﻿/*
 	PROYECTO 2 FUNDAMENTOS DE INFRAESTRUCTURA TECNOLOGICA
-	Nombre Estudiante 1 - Codigo Estudiante 1
-	Nombre Estudiante 2 - Codigo Estudiante 2
-	Nombre Estudiante 3 - Codigo Estudiante 3
+	Christian David Florez Pinillos - 201423499
+	Valerie Parra Cortés - 201619703
+	Juliana Prieto Arcila - 201714463
 */
 
 #include "stdlib.h"
@@ -104,6 +104,7 @@ void escribir(unsigned char *V, unsigned char *s, int p)
 	int i=0;
 	
 	__asm {
+		
 		//Tamaño
 		mov eax, p
 		cmp eax, 0
@@ -247,7 +248,19 @@ void escribir(unsigned char *V, unsigned char *s, int p)
 		cmp edi, ecx 
 		jb inicioCiclo
 			
-		salir:		
+		salir:	
+		
+		mov eax, s
+		mov edx, 0
+		borrar:
+		mov ecx, [eax+edx]
+		cmp ecx, 0
+		je libre
+		mov [eax+edx], ' '
+		inc edx
+		jmp borrar
+		libre:
+
 	}
 	//printf("%d %d",V[0],V[99]);
 	
@@ -264,7 +277,18 @@ void leer(unsigned char *V, unsigned char *s, int p, int l)
 	unsigned char prueba1,prueba2;
 	__asm {
 		//Truncar
-		//mov s, ' '
+
+		mov eax, s
+		mov edx, 0
+		borrar:
+		mov ecx, [eax+edx]
+		cmp ecx, 0
+		je libre
+		mov [eax+edx], ' '
+		inc edx
+		jmp borrar
+		libre:
+		
 		mov eax, 0	
 		mov eax, p
 		
@@ -339,12 +363,17 @@ void leer(unsigned char *V, unsigned char *s, int p, int l)
 		inc ecx
 		cmp ecx, 8	
 		jb avanzarBit
-		
+	
 		mov eax, 0
 		mov eax, p
-		inc eax
-		mov esi, V[eax]
+		mov edi, 0
+		mov edi, V
+		inc eax //bitte++
+		mov p, eax
+		mov esi, [edi+eax]
 		mov prueba3, esi
+		mov ecx, 0 //j=0
+
 		jmp avance
 
 		avanzarBit:		
@@ -356,13 +385,12 @@ void leer(unsigned char *V, unsigned char *s, int p, int l)
 		dec eax
 		mov l, eax
 		cmp eax, 0
-		ja inicioCiclo
-		
-		
+		jg inicioCiclo		
 
 		salir:		
         
 	}	
+	
 
 	
 }
